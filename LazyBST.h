@@ -7,8 +7,7 @@ using namespace std;
 /*
  TREENODE CLASS for LAZY BST
 */
- */
-template <class T>
+template <typename T>
 class TreeNode {
 public:
     TreeNode();
@@ -22,26 +21,27 @@ public:
     int rightDepth;
 };
 
-template <class T>
+template <typename T>
 TreeNode<T>::TreeNode() {
     left = NULL;
     right = NULL;
     key = NULL;
 }
 
-template <class T>
+template <typename T>
 TreeNode<T>::TreeNode(T k) {
     left = NULL;
     right = NULL;
     key = k;
 }
 
-template <class T>
+template <typename T>
 TreeNode<T>::~TreeNode() {
     left = NULL;
     right = NULL;
 }
 
+template <typename T>
 class LazyBST {
     LazyBST(); // empty tree
     virtual ~LazyBST();
