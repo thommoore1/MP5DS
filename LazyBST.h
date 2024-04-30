@@ -54,7 +54,9 @@ template <class T>
 int TreeNode<T>::getDepth(TreeNode<T> *node) {
     if (node != NULL) {
         // greatest depth of left and right subtrees
-        return max(getDepth(node->left), getDepth(node->right));
+        node->rightDepth = getDepth(node->right);
+        node->leftDepth = getDepth(node->left);
+        return max(node->leftDepth, node->rightDepth) + 1;
     }
     return 0;
 }
@@ -75,6 +77,7 @@ class LazyBST {
 
     void printTree();
     void recPrint(TreeNode<T> *node);
+    void recDelete(TreeNode<T> *node); // used for deleting the entire tree
 
 private:
     TreeNode<T> *root;
@@ -84,6 +87,63 @@ private:
 template <typename T>
 LazyBST<T>::LazyBST() {
     root = NULL;
+}
+
+template <class T>
+LazyBST<T>::~LazyBST() {
+    // deletes the root node
+    if (root != NULL) {
+        recDelete(root);
+    }
+}
+
+template <class T>
+void LazyBST<T>::recDelete(TreeNode<T> *node) {
+    if (node != NULL) {
+        recDelete(node->right);
+        recDelete(node->left);
+        delete node;
+    }
+    return;
+}
+
+template <class T>
+void insert(T value) {
+    TreeNode<T> *node = new TreeNode<T>(value);
+
+    if (isEmpty()) {
+        root = node;
+    }
+    else {
+        // tree had 1+ nodes
+        TreeNode<T> *current = root;
+        TreeNode<T> *parent = root;
+
+        while(true) {
+            parent = current;
+            
+            if (value < current) {
+                // go left
+                current = current->left;
+
+                if (current == NULL) {
+                    // found the insertion point
+                    parent->left = node;
+                    break;
+                }
+
+            }
+            else {
+                current = current->right;
+
+                if (current == NULL) {
+                    // isertion point
+                    parent->right = node;
+                    break;
+                }
+            }
+        }
+    }
 }
 
 
