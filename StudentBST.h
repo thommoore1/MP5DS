@@ -11,8 +11,8 @@ using namespace std;
 
 class StudentBST : public LazyBST<Student>{
     public:
-
-        void print(TreeNode<Student*>* node);
+        void print();
+        void printHelper(TreeNode<Student*>* node);
     private:
 };
 

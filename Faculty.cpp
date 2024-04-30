@@ -34,6 +34,12 @@ void Faculty::print(){
 bool Faculty::operator == (const Faculty& otherFaculty){
     return this->id == otherFaculty.id;
 }
+bool Faculty::operator < (const Faculty& otherFaculty) {
+    return this->id < otherFaculty.id;
+}
+bool Faculty::operator > (const Faculty& otherFaculty) {
+    return this->id > otherFaculty.id;
+}
 
 Faculty::~Faculty(){
 

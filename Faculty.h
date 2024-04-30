@@ -13,6 +13,8 @@ class Faculty{
         ~Faculty();
 
         bool operator==(const Faculty& otherFaculty); //TODO: Faculty* instead of Faculty&?
+        bool operator<(const Faculty& otherFaculty);
+        bool operator>(const Faculty& otherFaculty);
         void print();
     private:
         int id;

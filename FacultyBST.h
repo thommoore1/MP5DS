@@ -12,7 +12,8 @@ using namespace std;
 class FacultyBST : public LazyBST<Faculty>{
     public:
         FacultyBST();
-        void print(TreeNode<Faculty*>* node);
+        void printHelper(TreeNode<Faculty*>* node);
+        void print();
     private:
 };
 

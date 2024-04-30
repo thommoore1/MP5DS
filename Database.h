@@ -9,6 +9,8 @@
 #include "Faculty.h"
 #include "Student.h"
 #include "Faculty.h"
+#include "FacultyBST.h"
+#include "StudentBST.h"
 
 using namespace std;
 

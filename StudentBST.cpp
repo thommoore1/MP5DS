@@ -1,10 +1,14 @@
 #include "StudentBST.h"
 
-void StudentBST::print(TreeNode<Student*>* node){
+void StudentBST::print(){
+    printHelper(LazyBST::getRoot());
+}
+
+void StudentBST::printHelper(TreeNode<Student*>* node){
     if (node== NULL)
         return;
 
-    print(node->left);
+    printHelper(node->left);
     node->key->print();
-    print(node->right);
+    printHelper(node->right);
 }

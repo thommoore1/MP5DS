@@ -6,6 +6,7 @@ Database::Database(){
 
 void Database::start(){
     FacultyBST* facultyTree = new FacultyBST();
+    StudentBST* studentTree = new StudentBST();
 
     int menuChoice = -1;
     int studentID;
@@ -35,10 +36,10 @@ void Database::start(){
 
         cin >> menuChoice;
         if(menuChoice == 1){
-            //print(studentTree);
+            studentTree->print();
         }
         else if(menuChoice == 2){
-            //print(facultyTree);
+            facultyTree->print();
         }
         else if(menuChoice == 3){
             cout << "Enter the student ID you would like to search for: ";

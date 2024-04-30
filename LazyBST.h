@@ -63,13 +63,15 @@ int TreeNode<T>::getDepth(TreeNode<T> *node) {
 
 template <typename T>
 class LazyBST {
+
+public:
     LazyBST(); // empty tree
     virtual ~LazyBST();
     void insert(T value);
     bool contains(T value);
     bool deleteNode(T k);
     TreeNode<T> *getSuccessor(TreeNode<T> *d); // this method for finding the successor of the node about to be deleted
-    void rebuild();
+    void tryRebuild();
 
     bool isEmpty();
     T* getMin();
@@ -79,17 +81,28 @@ class LazyBST {
     void recPrint(TreeNode<T> *node);
     void recDelete(TreeNode<T> *node); // used for deleting the entire tree
 
+    TreeNode<T*>* getRoot();
+
 private:
+    int size;
     TreeNode<T> *root;
 
+    void arrayBuilder(T* buildArray);
+    int buildHelper(TreeNode<T*>* node, T* buildArray, int index);
+
 };
+
+template <typename T>
+TreeNode<T*>* LazyBST<T>::getRoot(){
+    return root;
+}
 
 template <typename T>
 LazyBST<T>::LazyBST() {
     root = NULL;
 }
 
-template <class T>
+template <typename T>
 LazyBST<T>::~LazyBST() {
     // deletes the root node
     if (root != NULL) {
@@ -97,7 +110,7 @@ LazyBST<T>::~LazyBST() {
     }
 }
 
-template <class T>
+template <typename T>
 void LazyBST<T>::recDelete(TreeNode<T> *node) {
     if (node != NULL) {
         recDelete(node->right);
@@ -107,47 +120,7 @@ void LazyBST<T>::recDelete(TreeNode<T> *node) {
     return;
 }
 
-template <class T>
-void insert(T value) {
-    TreeNode<T> *node = new TreeNode<T>(value);
-
-    if (isEmpty()) {
-        root = node;
-    }
-    else {
-        // tree had 1+ nodes
-        TreeNode<T> *current = root;
-        TreeNode<T> *parent = root;
-
-        while(true) {
-            parent = current;
-            
-            if (value < current) {
-                // go left
-                current = current->left;
-
-                if (current == NULL) {
-                    // found the insertion point
-                    parent->left = node;
-                    break;
-                }
-
-            }
-            else {
-                current = current->right;
-
-                if (current == NULL) {
-                    // isertion point
-                    parent->right = node;
-                    break;
-                }
-            }
-        }
-    }
-    root->updateDepths(); // updates depths of all nodes
-}
-
-template <class T>
+template <typename T>
 bool LazyBST<T>::contains(T value) {
 
     if (isEmpty()) return false;
@@ -159,7 +132,7 @@ bool LazyBST<T>::contains(T value) {
             current = current->left;
         }
         else {
-            current = current->right;
+            current = curinsertrent->right;
         }
 
         if (current == NULL) return false;
@@ -168,105 +141,8 @@ bool LazyBST<T>::contains(T value) {
 
 }
 
-template <class T>
-bool LazyBST<T>::deleteNode(T k) {
 
-    if (isEmpty()) return false;
-
-    TreeNode<T> *current = root;
-    TreeNode<T> *parent = root;
-    bool isLeft = true;
-
-    // find the node to delete
-    while (current->key != k) {
-        parent = current;
-
-        if (k < current->key) {
-            isLeft = true;
-            current = current->left;
-        }
-        else {
-            isLeft = false;
-            current = current->right;
-        }
-
-        if (current == NULL) return false;
-    }
-
-    // if we make it here, we have found the node to be deleted
-    //! LEAF NODE CASE:
-    if (current->left == NULL && current->right == NULL) {
-        if (current == root) root = NULL; // null it if only node in tree
-        else if (isLeft) {
-            parent->left = NULL;
-        }
-        else {
-            parent->right = NULL;
-        }
-
-    }
-    //! ONE LEFT CHILD CASE:
-    else if (current->right == NULL) {
-        if (current == root) {
-            root = current->left;
-        }
-        else if (isLeft) {
-            parent->left = current->left;
-        }
-        else {
-            parent->right = current->left;
-        }
-    }
-    //! ONE RIGHT CHILD CASE:
-    else if (current->left == NULL) {
-        if (current == root) {
-            root = current->right;
-        }
-        else if (isLeft) {
-            parent->left = current->right;
-        }
-        else {
-            parent->right = current->right;
-        }
-    }
-    //! TWO CHILDREN CASE:
-    else {
-        TreeNode<T> *successor = getSuccessor(current);
-
-        if (current == root) {
-            root = successor;
-        }
-        else if (isLeft) {
-            parent->left = successor;
-        }
-        else {
-            parent->right = successor;
-        }
-        successor->left = current->left;
-        current->left = NULL;
-        current->right = NULL;
-    }
-    delete current;
-    
-    return true;
-
-}
-
-
-
-
-
-template <class T>
-LazyBST<T>::LazyBST(){
-    root = NULL;
-}
-
-template <class T>
-LazyBST<T>::~LazyBST(){
-    //build some character, too much character never did no wrong
-}
-
-template <class T>
+template <typename T>
 void LazyBST<T>::recPrint(TreeNode<T> *node){
     if(node == NULL){
         return;
@@ -277,17 +153,17 @@ void LazyBST<T>::recPrint(TreeNode<T> *node){
     recPrint(node->right);
 }
 
-template <class T>
+template <typename T>
 void LazyBST<T>::printTree(){
     recPrint(root);
 }
 
-template <class T>
+template <typename T>
 bool LazyBST<T>::isEmpty(){
     return (root == NULL);
 }
 
-template <class T>
+template <typename T>
 T* LazyBST<T>::getMin(){
     if(isEmpty()){
         return NULL;
@@ -300,7 +176,7 @@ T* LazyBST<T>::getMin(){
     return &(current->key);
 }
 
-template <class T>
+template <typename T>
 T* LazyBST<T>::getMax(){
     if(isEmpty()){
         return NULL;
@@ -313,7 +189,7 @@ T* LazyBST<T>::getMax(){
     return &(current->key);
 }
 
-template <class T>
+template <typename T>
 void LazyBST<T>::insert(T value){
     TreeNode<T> *node = new TreeNode<T>(value);
 
@@ -346,9 +222,12 @@ void LazyBST<T>::insert(T value){
             }
         }
     }
+    root->updateDepths(); // update depths of tree
+    ++size;
+    tryRebuild();
 }
 
-template <class T>
+template <typename T>
 bool LazyBST<T>::contains(T value){
     if(isempty())
         return false;
@@ -370,7 +249,7 @@ bool LazyBST<T>::contains(T value){
     return true;
 }
 
-template <class T>
+template <typename T>
 bool LazyBST<T>::deleteNode(T k){
     if(isEmpty()){
         return false;
@@ -455,10 +334,13 @@ bool LazyBST<T>::deleteNode(T k){
     }
     
     delete current;
+    root->updateDepths(); // update depths of tree
+    --size;
+    tryRebuild();
     return true;
 }
 
-template <class T>
+template <typename T>
 //d is the node to be deleted
 TreeNode<T>* LazyBST<T>::getSuccessor(TreeNode<T> *d){
     TreeNode<T> *sp = d;
@@ -478,6 +360,48 @@ TreeNode<T>* LazyBST<T>::getSuccessor(TreeNode<T> *d){
         successor->right = d->right;
     }
     return successor;
+}
+
+template <typename T>
+void LazyBST<T>::tryRebuild() {
+    // check if conditions for rebuild are met
+    double heightFactor = (double) root->rightDepth / (double) root->leftDepth;
+    if (heightFactor > 1.5 || heightFactor < (0.666667)) { 
+        // make new array to temporarily store all values in BSTv
+        T* rebuildArray = new T*[size];
+        arrayBuilder(rebuildArray);
+        int median = size/2;
+
+        // delete contents (rec delete)
+
+        // insert median
+
+        // new median (median/2)
+
+        // new median (original median + origmedian/2)
+
+        // repeat previous 2 steps
+        
+        // iterate through array to 
+    }
+}
+
+template <typename T>
+void LazyBST<T>::arrayBuilder(T* buildArray){
+    printHelper(root, buildArray, 0);
+}
+
+template <typename T>
+int LazyBST<T>::buildHelper(TreeNode<T*>* node, T* buildArray, int index) {
+    if (node== NULL)
+        return index;
+
+    int newIndex = index;
+    // passes in index to left, will be updated if not null
+    newIndex = printHelper(node->left, buildArray, newIndex);
+    buildArray[newIndex++] = node; // updates index if there is a value here
+    newIndex = printHelper(node->right, buildArray, newIndex); // passes in index to the right
+    return newIndex; // returns the final index
 }
 
 #endif
