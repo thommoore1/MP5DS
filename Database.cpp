@@ -70,7 +70,7 @@ void Database::start(){
             cin >> level;
             cin >> department;
 
-            DblList<int>* studentList = new DblList<int>(); //TODO: Am i doing this right?
+            DblList<int>* studentList = new DblList<int>();
 
             cout << "Enter data: " << endl;
             cin >> facultyStudentIDInput;
@@ -105,6 +105,10 @@ void Database::start(){
             //studentTree->search(studentID)->setAdvisor(-1);
         }
     }
+}
+
+void Database::print(LazyBST<Faculty>* bst){
+    
 }
 
 Database::~Database(){
