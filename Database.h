@@ -8,6 +8,7 @@
 #include "LazyBST.h"
 #include "Faculty.h"
 #include "Student.h"
+#include "Faculty.h"
 
 using namespace std;
 

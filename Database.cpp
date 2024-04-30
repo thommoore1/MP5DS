@@ -5,6 +5,8 @@ Database::Database(){
 }
 
 void Database::start(){
+    FacultyBST* facultyTree = new FacultyBST();
+
     int menuChoice = -1;
     int studentID;
     int facultyID;
