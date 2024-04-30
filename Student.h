@@ -9,8 +9,10 @@ class Student{
     public:
         Student(int id, string name, string level, string major, double gpa, int advisorID);
         ~Student();
+
+        void print();
     private:
-        unsigned int id;
+        int id;
         string name;
         string level;
         string major;

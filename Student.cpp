@@ -9,6 +9,14 @@ Student::Student(int id, string name, string level, string major, double gpa, in
     this->advisorID = advisorID;
 }
 
+void Student::print(){
+    cout << "ID: " << id << endl;
+    cout << "Name: " << name << endl;
+    cout << "Level: " << major << endl;
+    cout << "Major: " << gpa << endl; 
+    cout << "GPA: " << advisorID << endl << endl;
+}
+
 Student::~Student(){
 
 }
