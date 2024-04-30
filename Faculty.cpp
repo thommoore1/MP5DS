@@ -16,11 +16,23 @@ void Faculty::print(){
     
     cout << name << " is an advisor for the students with the IDS: " << endl;
     int data;
-    while(!studentIDs->isEmpty()){
+    int loop = 0;
+    int firstID;
+
+    while(studentIDs->getFront() != firstID){
         data = studentIDs->removeFront();
+
+        if(loop == 0){
+            firstID = data;
+        }
+        
+        ++loop;
         cout << "   " << data << endl;
     }
+}
 
+bool Faculty::operator == (const Faculty& otherFaculty){
+    return this->id == otherFaculty.id;
 }
 
 Faculty::~Faculty(){

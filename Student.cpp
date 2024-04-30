@@ -17,7 +17,11 @@ void Student::print(){
     cout << "GPA: " << advisorID << endl << endl;
 }
 
-Student::~Student(){
+bool Student::operator == (const Student& otherStudent){
+    return this->id == otherStudent.id;
+}
 
+bool Student::operator < (const Student& otherStudent){
+    return this->id < otherStudent.id;
 }
 

@@ -12,6 +12,7 @@ class Faculty{
         Faculty(int id, string name, string level, string department, DblList<int>* studentIDs);
         ~Faculty();
 
+        bool operator==(const Faculty& otherFaculty); //TODO: Faculty* instead of Faculty&?
         void print();
     private:
         int id;
