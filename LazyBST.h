@@ -13,6 +13,8 @@ public:
     TreeNode();
     TreeNode(T k);
     virtual ~TreeNode();
+    void updateDepths();
+    int getDepth(TreeNode<T> *node);
 
     T key; // key = data
     TreeNode<T> *left;
@@ -41,6 +43,22 @@ TreeNode<T>::~TreeNode() {
     right = NULL;
 }
 
+template <class T>
+void TreeNode<T>::updateDepths() {
+    // get max depth of each tree and update it
+    rightDepth = getDepth(right);
+    leftDepth = getDepth(left);
+}
+
+template <class T>
+int TreeNode<T>::getDepth(TreeNode<T> *node) {
+    if (node != NULL) {
+        // greatest depth of left and right subtrees
+        return max(getDepth(node->left), getDepth(node->right));
+    }
+    return 0;
+}
+
 template <typename T>
 class LazyBST {
     LazyBST(); // empty tree
@@ -62,5 +80,12 @@ private:
     TreeNode<T> *root;
 
 };
+
+template <typename T>
+LazyBST<T>::LazyBST() {
+    root = NULL;
+}
+
+
 
 #endif //LAZYBST_H
