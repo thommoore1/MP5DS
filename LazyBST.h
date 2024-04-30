@@ -144,8 +144,113 @@ void insert(T value) {
             }
         }
     }
+    root->updateDepths(); // updates depths of all nodes
 }
 
+template <class T>
+bool LazyBST<T>::contains(T value) {
+
+    if (isEmpty()) return false;
+
+    TreeNode<T> *current = root;
+
+    while(current->key != value) {
+        if (val < current->key) {
+            current = current->left;
+        }
+        else {
+            current = current->right;
+        }
+
+        if (current == NULL) return false;
+    }
+    return true;
+
+}
+
+template <class T>
+bool LazyBST<T>::deleteNode(T k) {
+
+    if (isEmpty()) return false;
+
+    TreeNode<T> *current = root;
+    TreeNode<T> *parent = root;
+    bool isLeft = true;
+
+    // find the node to delete
+    while (current->key != k) {
+        parent = current;
+
+        if (k < current->key) {
+            isLeft = true;
+            current = current->left;
+        }
+        else {
+            isLeft = false;
+            current = current->right;
+        }
+
+        if (current == NULL) return false;
+    }
+
+    // if we make it here, we have found the node to be deleted
+    //! LEAF NODE CASE:
+    if (current->left == NULL && current->right == NULL) {
+        if (current == root) root = NULL; // null it if only node in tree
+        else if (isLeft) {
+            parent->left = NULL;
+        }
+        else {
+            parent->right = NULL;
+        }
+
+    }
+    //! ONE LEFT CHILD CASE:
+    else if (current->right == NULL) {
+        if (current == root) {
+            root = current->left;
+        }
+        else if (isLeft) {
+            parent->left = current->left;
+        }
+        else {
+            parent->right = current->left;
+        }
+    }
+    //! ONE RIGHT CHILD CASE:
+    else if (current->left == NULL) {
+        if (current == root) {
+            root = current->right;
+        }
+        else if (isLeft) {
+            parent->left = current->right;
+        }
+        else {
+            parent->right = current->right;
+        }
+    }
+    //! TWO CHILDREN CASE:
+    else {
+        TreeNode<T> *successor = getSuccessor(current);
+
+        if (current == root) {
+            root = successor;
+        }
+        else if (isLeft) {
+            parent->left = successor;
+        }
+        else {
+            parent->right = successor;
+        }
+        successor->left = current->left;
+        current->left = NULL;
+        current->right = NULL;
+    }
+    delete current;
+    
+    return true;
+
+}
 
 
 #endif //LAZYBST_H
