@@ -88,7 +88,8 @@ private:
     TreeNode<T> *root;
 
     void arrayBuilder(T* buildArray);
-    int buildHelper(TreeNode<T*>* node, T* buildArray, int index);
+    int buildHelper(TreeNode<T>* node, T* buildArray, int index);
+    void recRebuildInsert(TreeNode<T>* node, int lowerBound, int upperBound, int currMedian)
 
 };
 
@@ -371,12 +372,18 @@ void LazyBST<T>::tryRebuild() {
         T* rebuildArray = new T*[size];
         arrayBuilder(rebuildArray);
         int median = size/2;
+        int counterDone = 0; // should equal size at the end
 
         // delete contents (rec delete)
+        recDelete(root);
 
         // insert median
+        insert(rebuildArray[median]);
+        recRebuildInsert(root, (size/2) + 1, size - 1, (size-1 / 2));
+        
 
         // new median (median/2)
+
 
         // new median (original median + origmedian/2)
 
@@ -387,19 +394,25 @@ void LazyBST<T>::tryRebuild() {
 }
 
 template <typename T>
+void LazyBST<T>::recRebuildInsert(TreeNode<T>* node, int lowerBound, int upperBound, int remainingSize) {
+    if (remainingSize == 0) return;
+    
+}
+
+template <typename T>
 void LazyBST<T>::arrayBuilder(T* buildArray){
     printHelper(root, buildArray, 0);
 }
 
 template <typename T>
-int LazyBST<T>::buildHelper(TreeNode<T*>* node, T* buildArray, int index) {
-    if (node== NULL)
+int LazyBST<T>::buildHelper(TreeNode<T>* node, T* buildArray, int index) {
+    if (node == NULL)
         return index;
 
     int newIndex = index;
     // passes in index to left, will be updated if not null
     newIndex = printHelper(node->left, buildArray, newIndex);
-    buildArray[newIndex++] = node; // updates index if there is a value here
+    buildArray[newIndex++] = node->key*; // updates index if there is a value here
     newIndex = printHelper(node->right, buildArray, newIndex); // passes in index to the right
     return newIndex; // returns the final index
 }
