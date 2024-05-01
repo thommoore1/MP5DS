@@ -70,7 +70,7 @@ public:
     void insert(T value);
     bool contains(T value);
     bool deleteNode(T k);
-    TreeNode<T> *getSuccessor(TreeNode<T> *d); // this method for finding the successor of the node about to be deleted
+    TreeNode<T>* getSuccessor(TreeNode<T> *d); // this method for finding the successor of the node about to be deleted
     void tryRebuild();
 
     bool isEmpty();
@@ -89,7 +89,7 @@ private:
 
     void arrayBuilder(T* buildArray);
     int buildHelper(TreeNode<T>* node, T* buildArray, int index);
-    void recRebuildInsert(TreeNode<T>* node, int lowerBound, int upperBound, int currMedian)
+    void recRebuildInsert(TreeNode<T>* node, int lowerBound, int upperBound, int currMedian);
 
 };
 
@@ -121,26 +121,26 @@ void LazyBST<T>::recDelete(TreeNode<T> *node) {
     return;
 }
 
-template <typename T>
-bool LazyBST<T>::contains(T value) {
+// template <typename T>
+// bool LazyBST<T>::contains(T value) {
 
-    if (isEmpty()) return false;
+//     if (isEmpty()) return false;
 
-    TreeNode<T> *current = root;
+//     TreeNode<T> *current = root;
 
-    while(current->key != value) {
-        if (val < current->key) {
-            current = current->left;
-        }
-        else {
-            current = curinsertrent->right;
-        }
+//     while(current->key != value) {
+//         if (value < current->key) {
+//             current = current->left;
+//         }
+//         else {
+//             current = current->right;
+//         }
 
-        if (current == NULL) return false;
-    }
-    return true;
+//         if (current == NULL) return false;
+//     }
+//     return true;
 
-}
+// }
 
 
 template <typename T>
@@ -230,7 +230,7 @@ void LazyBST<T>::insert(T value){
 
 template <typename T>
 bool LazyBST<T>::contains(T value){
-    if(isempty())
+    if(isEmpty())
         return false;
     
     TreeNode<T> *current = root;
@@ -346,7 +346,7 @@ template <typename T>
 TreeNode<T>* LazyBST<T>::getSuccessor(TreeNode<T> *d){
     TreeNode<T> *sp = d;
     TreeNode<T> *successor = d;
-    TreeNode<T> = d->right;
+    TreeNode<T> current = d->right; //TODO: CORRECT?
 
     while(current != NULL){
         sp = successor;
@@ -381,9 +381,7 @@ void LazyBST<T>::tryRebuild() {
         insert(rebuildArray[median]);
         recRebuildInsert(root, (size/2) + 1, size - 1, (size-1 / 2));
         
-
         // new median (median/2)
-
 
         // new median (original median + origmedian/2)
 
@@ -412,7 +410,7 @@ int LazyBST<T>::buildHelper(TreeNode<T>* node, T* buildArray, int index) {
     int newIndex = index;
     // passes in index to left, will be updated if not null
     newIndex = printHelper(node->left, buildArray, newIndex);
-    buildArray[newIndex++] = node->key*; // updates index if there is a value here
+    buildArray[newIndex++] = node->key; // updates index if there is a value here
     newIndex = printHelper(node->right, buildArray, newIndex); // passes in index to the right
     return newIndex; // returns the final index
 }
