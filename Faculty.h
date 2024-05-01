@@ -15,7 +15,11 @@ class Faculty{
         bool operator==(const Faculty& otherFaculty); //TODO: Faculty* instead of Faculty&?
         bool operator<(const Faculty& otherFaculty);
         bool operator>(const Faculty& otherFaculty);
+        bool operator!=(const Faculty& otherFaculty);
         void print();
+        int getID();
+        void removeStudent(int studentID);
+        void addStudent(int studentID);
     private:
         int id;
         string name;

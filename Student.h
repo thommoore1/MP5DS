@@ -11,6 +11,10 @@ class Student{
         ~Student();
         bool operator==(const Student& otherStudent);
         bool operator<(const Student& otherStudent);
+        bool operator!=(const Student& otherStudent);
+        int getID();
+        int getAdvisor();
+        void setAdvisor(int advisorIDnew);
 
         void print();
     private:

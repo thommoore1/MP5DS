@@ -41,6 +41,22 @@ bool Faculty::operator > (const Faculty& otherFaculty) {
     return this->id > otherFaculty.id;
 }
 
+bool Faculty::operator!=(const Faculty& otherFaculty){
+    return this->id != otherFaculty.id;
+}
+
+int Faculty::getID(){
+    return id;
+}
+
+void Faculty::removeStudent(int studentID){
+    studentIDs->removeNode(studentID);
+}
+
+void Faculty::addStudent(int studentID){
+    studentIDs->insertBack(studentID);
+}
+
 Faculty::~Faculty(){
 
 }

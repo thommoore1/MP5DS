@@ -81,7 +81,7 @@ public:
     void recPrint(TreeNode<T> *node);
     void recDelete(TreeNode<T> *node); // used for deleting the entire tree
 
-    TreeNode<T*>* getRoot();
+    TreeNode<T>* getRoot();
 
 private:
     int size;
@@ -94,7 +94,7 @@ private:
 };
 
 template <typename T>
-TreeNode<T*>* LazyBST<T>::getRoot(){
+TreeNode<T>* LazyBST<T>::getRoot(){
     return root;
 }
 
@@ -149,7 +149,7 @@ void LazyBST<T>::recPrint(TreeNode<T> *node){
         return;
     }
 
-    cout << node->ket << endl;
+    cout << node->key << endl;
     recPrint(node->left);
     recPrint(node->right);
 }
@@ -235,8 +235,8 @@ bool LazyBST<T>::contains(T value){
     
     TreeNode<T> *current = root;
 
-    while(current->ket != value){
-        if(value < current->){
+    while(current->key != value){
+        if(value < current->key){ //TODO: current->key correct?
             current = current->left;
         }
         else{
