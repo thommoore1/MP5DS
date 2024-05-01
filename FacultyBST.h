@@ -11,7 +11,7 @@ using namespace std;
 
 class FacultyBST : public LazyBST<Faculty*>{
     public:
-        FacultyBST();
+        //FacultyBST();
         void printHelper(TreeNode<Faculty*>* node);
         void print();
         Faculty* search(int idNum);

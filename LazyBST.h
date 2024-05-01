@@ -183,33 +183,33 @@ T* LazyBST<T>::getMax(){
     if(isEmpty()){
         return NULL;
     }
-    public:
-        LazyBST(); // empty tree
-        virtual ~LazyBST();
-        void insert(T value);
-        bool contains(T value);
-        bool deleteNode(T k);
-        TreeNode<T>* getSuccessor(TreeNode<T> *d); // this method for finding the successor of the node about to be deleted
-        void tryRebuild();
+    // public:
+    //     LazyBST(); // empty tree
+    //     virtual ~LazyBST();
+    //     void insert(T value);
+    //     bool contains(T value);
+    //     bool deleteNode(T k);
+    //     TreeNode<T>* getSuccessor(TreeNode<T> *d); // this method for finding the successor of the node about to be deleted
+    //     void tryRebuild();
 
-        bool isEmpty();
-        T* getMin();
-        T* getMax();
+    //     bool isEmpty();
+    //     T* getMin();
+    //     T* getMax();
 
-        void printTree();
-        void recPrint(TreeNode<T> *node);
-        void recDelete(TreeNode<T> *node); // used for deleting the entire tree
+    //     void printTree();
+    //     void recPrint(TreeNode<T> *node);
+    //     void recDelete(TreeNode<T> *node); // used for deleting the entire tree
 
-        TreeNode<T>* getRoot();
+    //     TreeNode<T>* getRoot();
 
-    private:
-        int size;
-        TreeNode<T> *root;
-        int counterDone; // used to determine whether the array being built is done 
+    // private:
+    //     int size;
+    //     TreeNode<T> *root;
+    //     int counterDone; // used to determine whether the array being built is done 
 
-        void arrayBuilder(T* buildArray);
-        int buildHelper(TreeNode<T>* node, T* buildArray, int index);
-        void recRebuildInsert(T* buildArray, int lowerBound, int upperBound);
+    //     void arrayBuilder(T* buildArray);
+    //     int buildHelper(TreeNode<T>* node, T* buildArray, int index);
+    //     void recRebuildInsert(T* buildArray, int lowerBound, int upperBound);
     TreeNode<T> *current = root;
     while(current->right != NULL){
         current = current->right;
@@ -373,7 +373,7 @@ template <typename T>
 TreeNode<T>* LazyBST<T>::getSuccessor(TreeNode<T> *d){
     TreeNode<T> *sp = d;
     TreeNode<T> *successor = d;
-    TreeNode<T> current = d->right; //TODO: CORRECT?
+    TreeNode<T> *current = d->right; //TODO: CORRECT?
 
     while(current != NULL){
         sp = successor;
@@ -396,7 +396,7 @@ void LazyBST<T>::tryRebuild() {
     double heightFactor = (double) root->rightDepth / (double) root->leftDepth;
     if (heightFactor > 1.5 || heightFactor < (0.666667)) { 
         // make new array to temporarily store all values in BSTv
-        T* rebuildArray = new T*[size];
+        T* rebuildArray = new T[size];
         arrayBuilder(rebuildArray);
         int median = size/2;
 
@@ -433,7 +433,7 @@ void LazyBST<T>::recRebuildInsert(T* rebuildArray, int lowerBound, int upperBoun
         return;
     }
     int median = lowerBound + ((upperBound - lowerBound)/2);
-    insert(median);
+    insert(rebuildArray[median]); //TODO: I changed from insert(median) to insert(rebuildArray[median]). Daniel, was this corrent?
     // create new upper bound for the lower half (the one below this median)
     recRebuildInsert(rebuildArray, lowerBound, (lowerBound + ((upperBound - lowerBound)/2) - 1));
     // create nwe lower bound for the upper half (the one above this median)
@@ -442,7 +442,7 @@ void LazyBST<T>::recRebuildInsert(T* rebuildArray, int lowerBound, int upperBoun
 
 template <typename T>
 void LazyBST<T>::arrayBuilder(T* buildArray){
-    printHelper(root, buildArray, 0);
+    buildHelper(root, buildArray, 0);
 }
 
 template <typename T>
@@ -452,9 +452,9 @@ int LazyBST<T>::buildHelper(TreeNode<T>* node, T* buildArray, int index) {
 
     int newIndex = index;
     // passes in index to left, will be updated if not null
-    newIndex = printHelper(node->left, buildArray, newIndex);
+    newIndex = buildHelper(node->left, buildArray, newIndex); //TODO: changed this from printHelper(...) to buildHelper(...)
     buildArray[newIndex++] = node->key; // updates index if there is a value here
-    newIndex = printHelper(node->right, buildArray, newIndex); // passes in index to the right
+    newIndex = buildHelper(node->right, buildArray, newIndex); // passes in index to the right
     return newIndex; // returns the final index
 }
 
