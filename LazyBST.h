@@ -64,33 +64,33 @@ int TreeNode<T>::getDepth(TreeNode<T> *node) {
 template <typename T>
 class LazyBST {
 
-public:
-    LazyBST(); // empty tree
-    virtual ~LazyBST();
-    void insert(T value);
-    bool contains(T value);
-    bool deleteNode(T k);
-    TreeNode<T>* getSuccessor(TreeNode<T> *d); // this method for finding the successor of the node about to be deleted
-    void tryRebuild();
+    public:
+        LazyBST(); // empty tree
+        virtual ~LazyBST();
+        void insert(T value);
+        bool contains(T value);
+        bool deleteNode(T k);
+        TreeNode<T>* getSuccessor(TreeNode<T> *d); // this method for finding the successor of the node about to be deleted
+        void tryRebuild();
 
-    bool isEmpty();
-    T* getMin();
-    T* getMax();
+        bool isEmpty();
+        T* getMin();
+        T* getMax();
 
-    void printTree();
-    void recPrint(TreeNode<T> *node);
-    void recDelete(TreeNode<T> *node); // used for deleting the entire tree
+        void printTree();
+        void recPrint(TreeNode<T> *node);
+        void recDelete(TreeNode<T> *node); // used for deleting the entire tree
 
-    TreeNode<T>* getRoot();
+        TreeNode<T>* getRoot();
 
-private:
-    int size;
-    TreeNode<T> *root;
-    int counterDone; // used to determine whether the array being built is done 
+    private:
+        int size;
+        TreeNode<T> *root;
+        int counterDone; // used to determine whether the array being built is done 
 
-    void arrayBuilder(T* buildArray);
-    int buildHelper(TreeNode<T>* node, T* buildArray, int index);
-    void recRebuildInsert(T* buildArray, int lowerBound, int upperBound);
+        void arrayBuilder(T* buildArray);
+        int buildHelper(TreeNode<T>* node, T* buildArray, int index);
+        void recRebuildInsert(T* buildArray, int lowerBound, int upperBound);
 
 };
 
@@ -183,7 +183,33 @@ T* LazyBST<T>::getMax(){
     if(isEmpty()){
         return NULL;
     }
+    public:
+        LazyBST(); // empty tree
+        virtual ~LazyBST();
+        void insert(T value);
+        bool contains(T value);
+        bool deleteNode(T k);
+        TreeNode<T>* getSuccessor(TreeNode<T> *d); // this method for finding the successor of the node about to be deleted
+        void tryRebuild();
 
+        bool isEmpty();
+        T* getMin();
+        T* getMax();
+
+        void printTree();
+        void recPrint(TreeNode<T> *node);
+        void recDelete(TreeNode<T> *node); // used for deleting the entire tree
+
+        TreeNode<T>* getRoot();
+
+    private:
+        int size;
+        TreeNode<T> *root;
+        int counterDone; // used to determine whether the array being built is done 
+
+        void arrayBuilder(T* buildArray);
+        int buildHelper(TreeNode<T>* node, T* buildArray, int index);
+        void recRebuildInsert(T* buildArray, int lowerBound, int upperBound);
     TreeNode<T> *current = root;
     while(current->right != NULL){
         current = current->right;
@@ -394,17 +420,22 @@ void LazyBST<T>::tryRebuild() {
 
 template <typename T>
 void LazyBST<T>::recRebuildInsert(T* rebuildArray, int lowerBound, int upperBound) {
-    if (lowerBound == upperBound) {
+    if (lowerBound >= upperBound) {
         insert(rebuildArray[lowerBound]);
         return;
     }
     else if (upperBound - lowerBound == 1) {
         // insert both upper and lower bound
+        insert(rebuildArray[lowerBound]);
+        insert(rebuildArray[upperBound]);
+        return;
     }
     int median = lowerBound + ((upperBound - lowerBound)/2);
     insert(median);
-    recRebuildInsert()
-
+    // create new upper bound for the lower half (the one below this median)
+    recRebuildInsert(rebuildArray, lowerBound, (lowerBound + ((upperBound - lowerBound)/2) - 1));
+    // create nwe lower bound for the upper half (the one above this median)
+    recRebuildInsert(rebuildArray, (lowerBound + ((upperBound - lowerBound)/2) + 1), upperBound);
 }
 
 template <typename T>
