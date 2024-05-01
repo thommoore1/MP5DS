@@ -1,5 +1,8 @@
 Student and Faculty delete is not working (options 6 and 8).
     When I make a student object, delete it, and then print, the data still prints. However, I get a segfault if I delete it again
+    This could be related to the fact that we aren't deleting the student object, only the node. We might need to overload DeleteNode to fix This
+        However, IDK if this is it b/c the tree print method still uses the nodes to access the student for printing
+        Not deleting the student/faculty is still a problem, but I'm not sure if it is breaking anything
 
 Student change advisor gives segfault (option 9)
     This is because you need the current advisor to exist, and the new advisor to exist, and currently we cannot add more than one advisor
