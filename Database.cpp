@@ -49,7 +49,7 @@ void Database::start(){
         else if(menuChoice == 4){
             cout << "Enter the faculty ID you would like to search for: ";
             cin >> facultyID;
-            facultyTree->search(facultyID);
+            facultyTree->search(facultyID)->print();
         }
         else if(menuChoice == 5){
             cout << "Enter your student's ID, name, level, major, gpa, and their advisor's ID" << endl;

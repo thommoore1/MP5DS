@@ -433,7 +433,7 @@ void LazyBST<T>::recRebuildInsert(T* rebuildArray, int lowerBound, int upperBoun
         return;
     }
     int median = lowerBound + ((upperBound - lowerBound)/2);
-    insert(rebuildArray[median]); //TODO: I changed from insert(median) to insert(rebuildArray[median]). Daniel, was this corrent?
+    insert(rebuildArray[median]); //TODO: I changed from insert(median) to insert(rebuildArray[median]). Daniel, was this correct?
     // create new upper bound for the lower half (the one below this median)
     recRebuildInsert(rebuildArray, lowerBound, (lowerBound + ((upperBound - lowerBound)/2) - 1));
     // create nwe lower bound for the upper half (the one above this median)
@@ -452,7 +452,7 @@ int LazyBST<T>::buildHelper(TreeNode<T>* node, T* buildArray, int index) {
 
     int newIndex = index;
     // passes in index to left, will be updated if not null
-    newIndex = buildHelper(node->left, buildArray, newIndex); //TODO: changed this from printHelper(...) to buildHelper(...)
+    newIndex = buildHelper(node->left, buildArray, newIndex); //TODO: changed this from printHelper(...) to buildHelper(...) Daniel pls approve
     buildArray[newIndex++] = node->key; // updates index if there is a value here
     newIndex = buildHelper(node->right, buildArray, newIndex); // passes in index to the right
     return newIndex; // returns the final index

@@ -1,1 +1,8 @@
-Overload operators in student and faculty classes
+Student and Faculty delete is not working (options 6 and 8).
+    When I make a student object, delete it, and then print, the data still prints. However, I get a segfault if I delete it again
+
+Student change advisor gives segfault (option 9)
+    This is because you need the current advisor to exist, and the new advisor to exist
+
+Adding more than one student or faculty causes segfault (opions 5 and 7)
+    We might want to check some of our LazyBST code. Maybe get some official code from Rene

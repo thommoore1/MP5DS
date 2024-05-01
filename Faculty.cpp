@@ -28,6 +28,7 @@ void Faculty::print(){
         
         ++loop;
         cout << "   " << data << endl;
+        studentIDs->insertBack(data);
     }
 }
 

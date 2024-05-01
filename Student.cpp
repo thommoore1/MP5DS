@@ -9,12 +9,16 @@ Student::Student(int id, string name, string level, string major, double gpa, in
     this->advisorID = advisorID;
 }
 
+Student::~Student(){
+}
+
 void Student::print(){
     cout << "ID: " << id << endl;
     cout << "Name: " << name << endl;
-    cout << "Level: " << major << endl;
-    cout << "Major: " << gpa << endl; 
-    cout << "GPA: " << advisorID << endl << endl;
+    cout << "Level: " << level << endl;
+    cout << "Major: " << major << endl; 
+    cout << "GPA: " << gpa << endl;
+    cout << "Advisor ID: " << advisorID << endl << endl;
 }
 
 bool Student::operator == (const Student& otherStudent){
