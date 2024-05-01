@@ -86,10 +86,11 @@ public:
 private:
     int size;
     TreeNode<T> *root;
+    int counterDone; // used to determine whether the array being built is done 
 
     void arrayBuilder(T* buildArray);
     int buildHelper(TreeNode<T>* node, T* buildArray, int index);
-    void recRebuildInsert(TreeNode<T>* node, int lowerBound, int upperBound, int currMedian)
+    void recRebuildInsert(T* buildArray, int lowerBound, int upperBound);
 
 };
 
@@ -372,18 +373,16 @@ void LazyBST<T>::tryRebuild() {
         T* rebuildArray = new T*[size];
         arrayBuilder(rebuildArray);
         int median = size/2;
-        int counterDone = 0; // should equal size at the end
 
         // delete contents (rec delete)
         recDelete(root);
 
         // insert median
         insert(rebuildArray[median]);
-        recRebuildInsert(root, (size/2) + 1, size - 1, (size-1 / 2));
         
-
         // new median (median/2)
-
+        recRebuildInsert(rebuildArray, median+1, size);
+        recRebuildInsert(rebuildArray, 0, median-1);
 
         // new median (original median + origmedian/2)
 
@@ -394,9 +393,18 @@ void LazyBST<T>::tryRebuild() {
 }
 
 template <typename T>
-void LazyBST<T>::recRebuildInsert(TreeNode<T>* node, int lowerBound, int upperBound, int remainingSize) {
-    if (remainingSize == 0) return;
-    
+void LazyBST<T>::recRebuildInsert(T* rebuildArray, int lowerBound, int upperBound) {
+    if (lowerBound == upperBound) {
+        insert(rebuildArray[lowerBound]);
+        return;
+    }
+    else if (upperBound - lowerBound == 1) {
+        // insert both upper and lower bound
+    }
+    int median = lowerBound + ((upperBound - lowerBound)/2);
+    insert(median);
+    recRebuildInsert()
+
 }
 
 template <typename T>
