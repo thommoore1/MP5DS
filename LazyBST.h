@@ -420,10 +420,12 @@ void LazyBST<T>::tryRebuild() {
 
 template <typename T>
 void LazyBST<T>::recRebuildInsert(T* rebuildArray, int lowerBound, int upperBound) {
+    // if only one item left in array, insert it
     if (lowerBound >= upperBound) {
         insert(rebuildArray[lowerBound]);
         return;
     }
+    // if two items left
     else if (upperBound - lowerBound == 1) {
         // insert both upper and lower bound
         insert(rebuildArray[lowerBound]);
