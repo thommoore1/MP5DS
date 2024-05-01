@@ -44,12 +44,12 @@ void Database::start(){
         else if(menuChoice == 3){
             cout << "Enter the student ID you would like to search for: ";
             cin >> studentID;
-            //studentTree->search(studentID)->print();
+            studentTree->search(studentID)->print();
         }
         else if(menuChoice == 4){
             cout << "Enter the faculty ID you would like to search for: ";
             cin >> facultyID;
-            //facultyID->search(facultyID);
+            facultyTree->search(facultyID);
         }
         else if(menuChoice == 5){
             cout << "Enter your student's ID, name, level, major, gpa, and their advisor's ID" << endl;
@@ -59,12 +59,13 @@ void Database::start(){
             cin >> major;
             cin >> gpa;
             cin >> facultyID;
-            //studentTree->insert(new Student(studentID, name, level, major, gpa, facultyID));
+            Student* insert = new Student(studentID, name, level, major, gpa, facultyID);
+            studentTree->insert(insert);
         }
         else if(menuChoice == 6){
             cout << "Input the ID of the student you would like to delete" << endl;
             cin >> studentID;
-            //studentTree->delete(studentID);
+            studentTree->deleteNode(studentTree->search(studentID));
         }
         else if(menuChoice == 7){
             cout << "Enter the id, name, level, department, and IDs of any students the faculty advises for. Enter EXfT when you have entered all students" << endl;
@@ -84,28 +85,29 @@ void Database::start(){
                 cin >> facultyStudentIDInput;
             }
             
-            //facultyTree->insert(new Faculty(facultyID, name, level, department, studentList));
+            Faculty* insert = new Faculty(facultyID, name, level, department, studentList);
+            facultyTree->insert(insert);
             studentList = NULL;
         }
         else if(menuChoice == 8){
             cout << "Input the ID of the faculty you would like to delete" << endl;
             cin >> facultyID;
-            //studentTree->delete(facultyID);
+            facultyTree->deleteNode(facultyTree->search(facultyID));
         }
         else if(menuChoice == 9){
             cout << "Enter the ID of the student whose advisor you would like to change, then the ID of that advisor" << endl;
             cin >> studentID;
             cin >> facultyID;
-            //facultyTree->search(studentTree->search(studentID)->getAdvisor())->removeStudent(studentID);
-            //studentTree->search(studentID)->setAdivisor(facultyID);
-            //facultyTree->search(facultyID)->addStudent(studentID);
+            facultyTree->search(studentTree->search(studentID)->getAdvisor())->removeStudent(studentID);
+            studentTree->search(studentID)->setAdvisor(facultyID);
+            facultyTree->search(facultyID)->addStudent(studentID);
         }
         else if(menuChoice == 10){
             cout << "Enter student ID you would like to remove, then the advisor ID you would like to remove them from" << endl;
             cin >> studentID;
             cin >> facultyID;
-            //facultyTree->search(facultyID)->removeStudent(studentID);
-            //studentTree->search(studentID)->setAdvisor(-1);
+            facultyTree->search(facultyID)->removeStudent(studentID);
+            studentTree->search(studentID)->setAdvisor(-1);
         }
     }
 }

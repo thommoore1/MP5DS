@@ -70,7 +70,7 @@ public:
     void insert(T value);
     bool contains(T value);
     bool deleteNode(T k);
-    TreeNode<T> *getSuccessor(TreeNode<T> *d); // this method for finding the successor of the node about to be deleted
+    TreeNode<T>* getSuccessor(TreeNode<T> *d); // this method for finding the successor of the node about to be deleted
     void tryRebuild();
 
     bool isEmpty();
@@ -81,7 +81,7 @@ public:
     void recPrint(TreeNode<T> *node);
     void recDelete(TreeNode<T> *node); // used for deleting the entire tree
 
-    TreeNode<T*>* getRoot();
+    TreeNode<T>* getRoot();
 
 private:
     int size;
@@ -95,7 +95,7 @@ private:
 };
 
 template <typename T>
-TreeNode<T*>* LazyBST<T>::getRoot(){
+TreeNode<T>* LazyBST<T>::getRoot(){
     return root;
 }
 
@@ -122,26 +122,26 @@ void LazyBST<T>::recDelete(TreeNode<T> *node) {
     return;
 }
 
-template <typename T>
-bool LazyBST<T>::contains(T value) {
+// template <typename T>
+// bool LazyBST<T>::contains(T value) {
 
-    if (isEmpty()) return false;
+//     if (isEmpty()) return false;
 
-    TreeNode<T> *current = root;
+//     TreeNode<T> *current = root;
 
-    while(current->key != value) {
-        if (val < current->key) {
-            current = current->left;
-        }
-        else {
-            current = curinsertrent->right;
-        }
+//     while(current->key != value) {
+//         if (value < current->key) {
+//             current = current->left;
+//         }
+//         else {
+//             current = current->right;
+//         }
 
-        if (current == NULL) return false;
-    }
-    return true;
+//         if (current == NULL) return false;
+//     }
+//     return true;
 
-}
+// }
 
 
 template <typename T>
@@ -150,7 +150,7 @@ void LazyBST<T>::recPrint(TreeNode<T> *node){
         return;
     }
 
-    cout << node->ket << endl;
+    cout << node->key << endl;
     recPrint(node->left);
     recPrint(node->right);
 }
@@ -231,13 +231,13 @@ void LazyBST<T>::insert(T value){
 
 template <typename T>
 bool LazyBST<T>::contains(T value){
-    if(isempty())
+    if(isEmpty())
         return false;
     
     TreeNode<T> *current = root;
 
-    while(current->ket != value){
-        if(value < current->){
+    while(current->key != value){
+        if(value < current->key){ //TODO: current->key correct?
             current = current->left;
         }
         else{
@@ -347,7 +347,7 @@ template <typename T>
 TreeNode<T>* LazyBST<T>::getSuccessor(TreeNode<T> *d){
     TreeNode<T> *sp = d;
     TreeNode<T> *successor = d;
-    TreeNode<T> = d->right;
+    TreeNode<T> current = d->right; //TODO: CORRECT?
 
     while(current != NULL){
         sp = successor;
@@ -420,7 +420,7 @@ int LazyBST<T>::buildHelper(TreeNode<T>* node, T* buildArray, int index) {
     int newIndex = index;
     // passes in index to left, will be updated if not null
     newIndex = printHelper(node->left, buildArray, newIndex);
-    buildArray[newIndex++] = node->key*; // updates index if there is a value here
+    buildArray[newIndex++] = node->key; // updates index if there is a value here
     newIndex = printHelper(node->right, buildArray, newIndex); // passes in index to the right
     return newIndex; // returns the final index
 }

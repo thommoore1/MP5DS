@@ -25,4 +25,18 @@ bool Student::operator < (const Student& otherStudent){
     return this->id < otherStudent.id;
 }
 
+bool Student::operator!=(const Student& otherStudent){
+    return this->id != otherStudent.id;
+}
 
+int Student::getID(){
+    return id;
+}
+
+int Student::getAdvisor(){
+    return advisorID;
+}
+
+void Student::setAdvisor(int advisorIDnew){
+    advisorID = advisorIDnew;
+}
