@@ -10,6 +10,8 @@ void StudentBST::printHelper(TreeNode<Student*>* node){
 
     printHelper(node->left);
     node->key->print();
+    cout << "RD: " << node->rightDepth << endl;
+    cout << "LD: " << node->leftDepth << endl;
     printHelper(node->right);
 }
 
@@ -20,7 +22,7 @@ Student* StudentBST::search(int idNum){
     TreeNode<Student*> *current = LazyBST::getRoot();
 
     while(current->key->getID() != idNum){
-        if(idNum < current->key->getID()){ //TODO: current->key correct?
+        if(idNum < current->key->getID()){
             current = current->left;
         }
         else{

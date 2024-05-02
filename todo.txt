@@ -4,9 +4,6 @@ Student and Faculty delete is not working (options 6 and 8).
         However, IDK if this is it b/c the tree print method still uses the nodes to access the student for printing
         Not deleting the student/faculty is still a problem, but I'm not sure if it is breaking anything
 
-Student change advisor gives segfault (option 9)
-    This is because you need the current advisor to exist, and the new advisor to exist, and currently we cannot add more than one advisor
-
 Adding more than one student or faculty causes segfault (opions 5 and 7)
     We might want to check some of our LazyBST code. Maybe get some official code from Rene
 
