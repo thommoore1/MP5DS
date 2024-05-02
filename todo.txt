@@ -9,3 +9,6 @@ Student change advisor gives segfault (option 9)
 
 Adding more than one student or faculty causes segfault (opions 5 and 7)
     We might want to check some of our LazyBST code. Maybe get some official code from Rene
+
+-----NOTE-----
+Above probably works once we finish balancing
