@@ -19,7 +19,7 @@ void Faculty::print(){
     int loop = 0;
     int firstID;
 
-    while(studentIDs->getFront() != firstID){
+    while(!(studentIDs->isEmpty()) && studentIDs->getFront() != firstID){
         data = studentIDs->removeFront();
 
         if(loop == 0){
@@ -51,7 +51,9 @@ int Faculty::getID(){
 }
 
 void Faculty::removeStudent(int studentID){
-    studentIDs->removeNode(studentID);
+    if(studentIDs->find(studentID) != -1){
+        studentIDs->removeNode(studentID);
+    }
 }
 
 void Faculty::addStudent(int studentID){

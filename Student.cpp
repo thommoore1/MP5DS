@@ -18,7 +18,12 @@ void Student::print(){
     cout << "Level: " << level << endl;
     cout << "Major: " << major << endl; 
     cout << "GPA: " << gpa << endl;
-    cout << "Advisor ID: " << advisorID << endl << endl;
+    if(advisorID != -1){
+        cout << "Advisor ID: " << advisorID << endl << endl;
+    }
+    else{
+        cout << "No advisor" << endl << endl;
+    }
 }
 
 bool Student::operator == (const Student& otherStudent){

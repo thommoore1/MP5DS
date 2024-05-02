@@ -23,7 +23,7 @@ class Student{
         string level;
         string major;
         double gpa;
-        unsigned int advisorID;
+        int advisorID;
 
 };
 

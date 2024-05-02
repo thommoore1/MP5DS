@@ -23,16 +23,17 @@ void Database::start(){
 
     while(menuChoice != 11){
         cout << "---MAKE YOUR CHOICE!---" << endl << endl;
-        cout << "1. Print all students and their information (sorted by ascending id #)" << endl;
-        cout << "2. Print all faculty and their information (sorted by ascending id #)" << endl;
-        cout << "3. Find and display student information given the student id" << endl;
-        cout << "4. Find and display faculty information given the faculty id" << endl;
-        cout << "5. Add a new student" << endl;
-        cout << "6. Delete a student given the id" << endl;
-        cout << "7. Add a new faculty member" << endl;
-        cout << "8. Delete a faculty member given the id." << endl;
-        cout << "9. Change a student’s advisor given the student id and the new faculty id." << endl;
+        cout << "1.  Print all students and their information (sorted by ascending id #)" << endl;
+        cout << "2.  Print all faculty and their information (sorted by ascending id #)" << endl;
+        cout << "3.  Find and display student information given the student id" << endl;
+        cout << "4.  Find and display faculty information given the faculty id" << endl;
+        cout << "5.  Add a new student" << endl;
+        cout << "6.  Delete a student given the id" << endl;
+        cout << "7.  Add a new faculty member" << endl;
+        cout << "8.  Delete a faculty member given the id." << endl;
+        cout << "9.  Change a student’s advisor given the student id and the new faculty id." << endl;
         cout << "10. Remove an advisee from a faculty member given the id" << endl;
+        cout << "11. Quit" << endl << endl;
 
         cin >> menuChoice;
         if(menuChoice == 1){
@@ -106,7 +107,7 @@ void Database::start(){
             cout << "Enter student ID you would like to remove, then the advisor ID you would like to remove them from" << endl;
             cin >> studentID;
             cin >> facultyID;
-            facultyTree->search(facultyID)->removeStudent(studentID);
+            facultyTree->search(facultyID)->removeStudent(studentID); //remove student is safe incase student doesn't exist
             studentTree->search(studentID)->setAdvisor(-1);
         }
     }
