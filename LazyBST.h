@@ -495,7 +495,6 @@ void LazyBST<T>::arrayBuilder(T* buildArray){
 
 template <typename T>
 int LazyBST<T>::buildHelper(TreeNode<T>* node, T* buildArray, int index) {
-    cout << "AHHHH" << endl;
     if (node == NULL)
         return index;
 
