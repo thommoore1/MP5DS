@@ -14,7 +14,7 @@ void Faculty::print(){
     cout << "Level: " << level << endl; 
     cout << "Department: " << department << endl;
     
-    cout << name << " is an advisor for the students with the IDS: " << endl;
+    cout << name << " is an advisor for the students with the IDS: " << endl << endl;
     int data;
     int loop = 0;
     int firstID;

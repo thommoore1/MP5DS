@@ -47,26 +47,18 @@ TreeNode<T>::~TreeNode() {
 template <class T>
 void TreeNode<T>::updateDepths() {
     // get max depth of each tree and update it
-    cout << "mememe" << endl;
     rightDepth = getDepth(right);
-    cout << "youyou" << endl;
     leftDepth = getDepth(left);
-    cout << "usususu" << endl;
 }
 
 template <class T>
 int TreeNode<T>::getDepth(TreeNode<T> *node) {
-    cout << node << endl;
     if (node != NULL) {
         // greatest depth of left and right subtrees
         node->key->print();
-        cout << "nosotros" << endl;
         node->rightDepth = getDepth(node->right);
-        cout << "yo" << endl;
         node->leftDepth = getDepth(node->left);
-        cout << "tu" << endl;
-        return max(node->leftDepth, node->rightDepth) + 1;
-        cout << "ella" << endl;
+        return max(node->leftDepth, node->rightDepth) + 1; // adds one to account for this node
     }
     return 0;
 }
@@ -142,8 +134,6 @@ void LazyBST<T>::recDeleteHelper(TreeNode<T> *node) {
         node->left = NULL;
         delete node;
     }
-    
-    cout << "root: " << root << endl;
     return;
 }
 
@@ -244,14 +234,12 @@ T* LazyBST<T>::getMax(){
 
 template <typename T>
 void LazyBST<T>::insert(T value){
-    cout << "aegfgqw" << endl;
     TreeNode<T> *node = new TreeNode<T>(value);
 
     if(isEmpty()){
         root = node;
     }
     else{
-        cout << "awuihrqwetbhiuqb" << endl;
         TreeNode<T> *current = root;
         TreeNode<T> *parent = root;
 
@@ -277,12 +265,9 @@ void LazyBST<T>::insert(T value){
             }
         }
     }
-    cout << "yippie" << endl; 
     root->updateDepths(); // update depths of tree
-    cout << "epeo" << endl;
     ++size;
     tryRebuild();
-    cout << "Manther" << endl;
 }
 
 template <typename T>
@@ -293,7 +278,7 @@ bool LazyBST<T>::contains(T value){
     TreeNode<T> *current = root;
 
     while(current->key != value){
-        if(value < current->key){ //TODO: current->key correct?
+        if(value < current->key){ 
             current = current->left;
         }
         else{
@@ -403,7 +388,7 @@ template <typename T>
 TreeNode<T>* LazyBST<T>::getSuccessor(TreeNode<T> *d){
     TreeNode<T> *sp = d;
     TreeNode<T> *successor = d;
-    TreeNode<T> *current = d->right; //TODO: CORRECT?
+    TreeNode<T> *current = d->right; 
 
     while(current != NULL){
         sp = successor;
@@ -424,39 +409,27 @@ template <typename T>
 void LazyBST<T>::tryRebuild() {
     // check if conditions for rebuild are met
     int heightFactor = abs(root->rightDepth - root->leftDepth);
-
-    cout << "ROOT RIGHT DEPTH: " << root->rightDepth << endl;
-    cout << "ROOT LEFT DEPTH: " << root->leftDepth << endl;
-    cout << "HEIGHT FACTOR: " << heightFactor << endl;
     if (heightFactor > 1.5) { 
         // make new array to temporarily store all values in BSTv
-        cout << "SIZE IS: " << size << endl;
         T* rebuildArray = new T[size];
         arrayBuilder(rebuildArray);
         int median = 0;
         median = size/2;
 
         // delete contents (rec delete)
-        cout << "hi" << endl;
         recDelete();
 
         int sizeCopy = size;
         size = 0;
-        cout << "yarg" << endl;
 
         // insert median
-        cout << "median?!>?!>?" << endl;
-        cout << "MEDIAN: " << median << endl;
         rebuildArray[0]->print();
         rebuildArray[median]->print();
         insert(rebuildArray[median]);
-        cout << "nope" << endl;
         
         // new median (median/2)
         recRebuildInsert(rebuildArray, median+1, size);
-        cout << "Tom" << endl;
         recRebuildInsert(rebuildArray, 0, median-1);
-        cout << "daniel" << endl;
 
         // new median (original median + origmedian/2)
 
