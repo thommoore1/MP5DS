@@ -5,11 +5,11 @@ Database::Database(){
 }
 
 void Database::start(){
-    FacultyBST* facultyTree = new FacultyBST();
-    StudentBST* studentTree = new StudentBST();
+    FacultyBST* facultyTree = new FacultyBST(); //LazyBST for faculty
+    StudentBST* studentTree = new StudentBST(); //LazyBST for student
 
-    int menuChoice = -1;
-    int studentID;
+    string menuChoice = "-1"; //used for choosing which action you would like to do. chose string incase a non int is selected, so that it will just retry in that case
+    int studentID;//next few lines are for cin the data for the different menu options
     int facultyID;
 
     string name;
@@ -21,7 +21,7 @@ void Database::start(){
 
     string facultyStudentIDInput;
 
-    while(menuChoice != 11){
+    while(menuChoice != "11"){
         cout << "---MAKE YOUR CHOICE!---" << endl << endl;
         cout << "1.  Print all students and their information (sorted by ascending id #)" << endl;
         cout << "2.  Print all faculty and their information (sorted by ascending id #)" << endl;
@@ -35,54 +35,53 @@ void Database::start(){
         cout << "10. Remove an advisee from a faculty member given the id" << endl;
         cout << "11. Quit" << endl << endl;
 
-        cin >> menuChoice;
+        cin >> menuChoice; //taking in user choice
+        cout << endl;
         // 1-2: printing for student and faculty
-        if(menuChoice == 1){
-            cout << endl;
+        if(menuChoice == "1"){ 
             studentTree->print(); //safe if nothing is present
             cout << endl;
         }
-        else if(menuChoice == 2){
-            cout << endl;
-            facultyTree->print(); //safe if nothing is presemt
-            cout << endl;
+        else if(menuChoice == "2"){
+            facultyTree->print(); //safe if nothing is present
         }
         // 3-4: searching for students or faculty
-        else if(menuChoice == 3){
-            cout << "Enter the student ID you would like to search for: ";
+        else if(menuChoice == "3"){
+            cout << "Enter the student ID you would like to search for: " << endl;
             cin >> studentID;
-            if(cin.fail()){
+            cout << endl;
+            if(cin.fail()){ //making sure a correct variable is input
                 cout << "Int was not entered. Please call this again to properly print" << endl << endl;
             }
             else{
                 studentTree->search(studentID)->print();
             }
         }
-        else if(menuChoice == 4){
-            cout << "Enter the faculty ID you would like to search for: ";
+        else if(menuChoice == "4"){
+            cout << "Enter the faculty ID you would like to search for: " << endl;
             cin >> facultyID;
             if(cin.fail()){
                 cout << "Int was not entered. Please call this again to properly print" << endl << endl;
             }
-            else{
+            else{ //making sure a correct variable is input
                 facultyTree->search(facultyID)->print();
             }
         }
         // 5: adding a new student
-        else if(menuChoice == 5){
+        else if(menuChoice == "5"){
             cout << "Enter your student's ID, name, level, major, gpa, and their advisor's ID" << endl << endl;
-            while(true){
+            while(true){ //will keep retrying until correct input is done
                 cin >> studentID;
                 cin >> name;
                 cin >> level;
                 cin >> major;
                 cin >> gpa;
                 cin >> facultyID;
-                if(cin.fail()){
+                if(cin.fail()){ //making sure a correct variable is input
                     cout << endl << "Invalid Input. Please try again." << endl
                          << "Enter your student's ID, name, level, major, gpa, and their advisor's ID" << endl << endl;
-                    cin.clear();
-                    string fix; //read the invalid input into it
+                    cin.clear();  //these three line are how we reset to re-read it. I learned this from stack overflow
+                    string fix;
                     getline(cin, fix);
                 }
                 else{
@@ -93,11 +92,10 @@ void Database::start(){
             Student* insert = new Student(studentID, name, level, major, gpa, facultyID);
             studentTree->insert(insert);
         }
-        else if(menuChoice == 6){
-            cout << endl;
-            cout << "Input the ID of the student you would like to delete" << endl;
+        else if(menuChoice == "6"){ // deleting a student
+            cout << "Input the ID of the student you would like to delete" << endl << endl;
             cin >> studentID;
-            if(cin.fail()){
+            if(cin.fail()){ //making sure a correct variable is input
                 cout << "Int was not entered. Please call this again to properly print" << endl << endl;
             }
             else{
@@ -105,19 +103,19 @@ void Database::start(){
                 cout << endl;
             }
         }
-        else if(menuChoice == 7){
+        else if(menuChoice == "7"){ // Adding faculty
             cout << "Enter the id, name, level, department, and IDs of any students the faculty advises for. Enter anything other an int when all students are entered" << endl;
-            while (true) {
+            while (true) { //Keep looping until inputs are correct
                 cin >> facultyID;
                 cin >> name;
                 cin >> level;
                 cin >> department;
                 
-                if (cin.fail()) {
+                if (cin.fail()) { //making sure a correct variable is input
                     cout << endl << "Invalid Input. Please try again." << endl
                          << "Enter the advisor's ID, name, level, department, and any IDs of the students the faculty advises for. Enter anything other an int to exit when all students are entered" << endl << endl;
-                    cin.clear();
-                    string fix; //read the invalid input into it
+                    cin.clear(); //these three line are how we reset to re-read it. I learned this from stack overflow
+                    string fix;
                     getline(cin, fix);
                 }
                 else{
@@ -152,9 +150,9 @@ void Database::start(){
             facultyTree->insert(insert);
             studentList = NULL;
         }
-        else if(menuChoice == 8){
+        else if(menuChoice == "8"){ // Deleting faculty
             cout << "Input the ID of the faculty you would like to delete" << endl;
-            if(cin.fail()){
+            if(cin.fail()){ //making sure a correct variable is input
                 cout << "Int was not entered. Please call this again to properly print" << endl << endl;
             }
             else{
@@ -167,7 +165,7 @@ void Database::start(){
                 }
             }
         }
-        else if(menuChoice == 9){
+        else if(menuChoice == "9"){ //changin student's advisor
             cout << "Enter the ID of the student whose advisor you would like to change, then the ID of that advisor" << endl;
             cin >> studentID;
             cin >> facultyID;
@@ -189,11 +187,11 @@ void Database::start(){
                 }
             }
         }
-        else if(menuChoice == 10){
+        else if(menuChoice == "10"){ //deleting student from advisor's advisee list
             cout << "Enter student ID you would like to remove, then the advisor ID you would like to remove them from" << endl;
             cin >> studentID;
             cin >> facultyID;
-            if(cin.fail()){
+            if(cin.fail()){ //making sure a correct variable is input
                 cout << "Int was not entered. Please call this again to properly print" << endl << endl;
             }
             else{

@@ -216,7 +216,7 @@ void LazyBST<T>::insert(T value){
     }
     root->updateDepths(); // update depths of tree
     ++size;
-    if(rebalancing){
+    if(!rebalancing){
         tryRebuild();
     }
 }
@@ -248,11 +248,9 @@ bool LazyBST<T>::deleteNode(T k){
     if(isEmpty()){
         return false;
     }
-
     TreeNode<T> *current = root;
     TreeNode<T> *parent = root;
     bool isLeft = true;
-
     while(current->key != k){
         parent = current;
 
@@ -271,11 +269,10 @@ bool LazyBST<T>::deleteNode(T k){
     }
 
     //if we get here, then we found the node to be deleted
-
     /* node to be deleted is a leaf node (no children)*/
     if(current->left == NULL && current->right == NULL){
         if(current == root){
-            root == NULL;
+            root = NULL;
         }
         else if(isLeft){
             parent->left = NULL;
@@ -325,13 +322,18 @@ bool LazyBST<T>::deleteNode(T k){
         successor->left = current->left;
         current->left = NULL;
         current->right = NULL;
+        
     }
-    
+    delete current->key;
     delete current;
-    root->updateDepths(); // update depths of tree
+    if(root != NULL){
+        root->updateDepths(); // update depths of tree
+    }
     --size;
     rebalancing = true;
-    tryRebuild();
+    if(root != NULL){
+        tryRebuild();
+    }
     rebalancing = false;
     return true;
 }
@@ -380,9 +382,8 @@ void LazyBST<T>::tryRebuild() {
         //rebuildArray[median]->print();
         rebalancing = true;
         insert(rebuildArray[median]);
-        
         // new median (median/2)
-        recRebuildInsert(rebuildArray, median+1, size);
+        recRebuildInsert(rebuildArray, median+1, sizeCopy - 1);
         recRebuildInsert(rebuildArray, 0, median-1);
         rebalancing = false;
 

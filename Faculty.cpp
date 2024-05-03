@@ -14,7 +14,7 @@ void Faculty::print(){
     cout << "Level: " << level << endl; 
     cout << "Department: " << department << endl;
     
-    cout << name << " is an advisor for the students with the IDS: " << endl << endl;
+    cout << name << " is an advisor for the students with the IDS: " << endl;
     int data;
     int loop = 0;
     int firstID;
@@ -30,6 +30,7 @@ void Faculty::print(){
         cout << "   " << data << endl;
         studentIDs->insertBack(data);
     }
+    cout << endl;
 }
 
 bool Faculty::operator == (const Faculty& otherFaculty){

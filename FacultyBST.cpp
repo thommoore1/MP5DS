@@ -4,7 +4,7 @@ void FacultyBST::print(){
     printHelper(LazyBST::getRoot());
 }
 
-void FacultyBST::printHelper(TreeNode<Faculty*>* node){
+void FacultyBST::printHelper(TreeNode<Faculty*>* node){ //prints data in order
     if (node== NULL)
         return;
 
@@ -13,14 +13,14 @@ void FacultyBST::printHelper(TreeNode<Faculty*>* node){
     printHelper(node->right);
 }
 
-Faculty* FacultyBST::search(int idNum){
+Faculty* FacultyBST::search(int idNum){ //special search method that searches based on the studentIDs number, because we do not want to search based on key
     if(LazyBST::isEmpty())
         return NULL;
     
     TreeNode<Faculty*> *current = LazyBST::getRoot();
 
     while(current->key->getID() != idNum){
-        if(idNum < current->key->getID()){ //TODO: current->key correct?
+        if(idNum < current->key->getID()){
             current = current->left;
         }
         else{
@@ -32,17 +32,4 @@ Faculty* FacultyBST::search(int idNum){
         }
     }
     return current->key;
-}
-
-void FacultyBST::recDeleteHelper(TreeNode<Faculty*> *node){
-    if (node != NULL) {
-        recDeleteHelper(node->right);
-        delete node->right->key;
-        node->right = NULL;
-        recDeleteHelper(node->left);
-        delete node->left->key;
-        node->left = NULL;
-        delete node;
-    }
-    return;
 }

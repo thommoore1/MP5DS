@@ -4,18 +4,16 @@ void StudentBST::print(){
     printHelper(LazyBST::getRoot());
 }
 
-void StudentBST::printHelper(TreeNode<Student*>* node){
+void StudentBST::printHelper(TreeNode<Student*>* node){ //prints data in order
     if (node== NULL)
         return;
 
     printHelper(node->left);
     node->key->print();
-    //cout << "RD: " << node->rightDepth << endl;
-    //cout << "LD: " << node->leftDepth << endl;
     printHelper(node->right);
 }
 
-Student* StudentBST::search(int idNum){
+Student* StudentBST::search(int idNum){ //special search method that searches based on the studentIDs number, because we do not want to search based on key
     if(LazyBST::isEmpty())
         return NULL;
     
