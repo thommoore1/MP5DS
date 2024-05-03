@@ -61,5 +61,5 @@ void Faculty::addStudent(int studentID){
 }
 
 Faculty::~Faculty(){
-
+    delete studentIDs;
 }

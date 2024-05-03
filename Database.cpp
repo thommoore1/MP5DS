@@ -38,10 +38,14 @@ void Database::start(){
         cin >> menuChoice;
         // 1-2: printing for student and faculty
         if(menuChoice == 1){
-            studentTree->print(); //safe if nothing is presemt
+            cout << endl;
+            studentTree->print(); //safe if nothing is present
+            cout << endl;
         }
         else if(menuChoice == 2){
+            cout << endl;
             facultyTree->print(); //safe if nothing is presemt
+            cout << endl;
         }
         // 3-4: searching for students or faculty
         else if(menuChoice == 3){
@@ -66,7 +70,7 @@ void Database::start(){
         }
         // 5: adding a new student
         else if(menuChoice == 5){
-            cout << "Enter your student's ID, name, level, major, gpa, and their advisor's ID" << endl;
+            cout << "Enter your student's ID, name, level, major, gpa, and their advisor's ID" << endl << endl;
             while(true){
                 cin >> studentID;
                 cin >> name;
@@ -82,6 +86,7 @@ void Database::start(){
                     getline(cin, fix);
                 }
                 else{
+                    cout << endl;
                     break;
                 }
             }
@@ -89,10 +94,16 @@ void Database::start(){
             studentTree->insert(insert);
         }
         else if(menuChoice == 6){
+            cout << endl;
             cout << "Input the ID of the student you would like to delete" << endl;
             cin >> studentID;
-            studentTree->deleteNode(studentTree->search(studentID));
-            cout << endl;
+            if(cin.fail()){
+                cout << "Int was not entered. Please call this again to properly print" << endl << endl;
+            }
+            else{
+                studentTree->deleteNode(studentTree->search(studentID));
+                cout << endl;
+            }
         }
         else if(menuChoice == 7){
             cout << "Enter the id, name, level, department, and IDs of any students the faculty advises for. Enter anything other an int when all students are entered" << endl;
@@ -196,10 +207,8 @@ void Database::start(){
             }
         }
     }
-}
-
-void Database::print(LazyBST<Faculty>* bst){
-    
+    delete facultyTree;
+    delete studentTree;
 }
 
 Database::~Database(){

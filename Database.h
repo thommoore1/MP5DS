@@ -19,9 +19,6 @@ class Database{
         Database();
         ~Database();
         void start();
-    private:
-        void print(LazyBST<Faculty>* bst);
-        void print(LazyBST<Student>* bst);
 };
 
 #endif

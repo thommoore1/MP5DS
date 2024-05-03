@@ -33,3 +33,16 @@ Faculty* FacultyBST::search(int idNum){
     }
     return current->key;
 }
+
+void FacultyBST::recDeleteHelper(TreeNode<Faculty*> *node){
+    if (node != NULL) {
+        recDeleteHelper(node->right);
+        delete node->right->key;
+        node->right = NULL;
+        recDeleteHelper(node->left);
+        delete node->left->key;
+        node->left = NULL;
+        delete node;
+    }
+    return;
+}

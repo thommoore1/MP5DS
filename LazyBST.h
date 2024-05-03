@@ -55,7 +55,6 @@ template <class T>
 int TreeNode<T>::getDepth(TreeNode<T> *node) {
     if (node != NULL) {
         // greatest depth of left and right subtrees
-        node->key->print();
         node->rightDepth = getDepth(node->right);
         node->leftDepth = getDepth(node->left);
         return max(node->leftDepth, node->rightDepth) + 1; // adds one to account for this node
@@ -87,6 +86,7 @@ class LazyBST {
         TreeNode<T>* getRoot();
 
     private:
+        bool rebalancing;
         int size;
         TreeNode<T> *root;
         int counterDone; // used to determine whether the array being built is done 
@@ -98,20 +98,13 @@ class LazyBST {
 };
 
 template <typename T>
-void LazyBST<T>::recDelete(){
-    recDeleteHelper(root);
-    // root->right = NULL;
-    // root->left = NULL;
-    root = NULL;
-}
-
-template <typename T>
 TreeNode<T>* LazyBST<T>::getRoot(){
     return root;
 }
 
 template <typename T>
 LazyBST<T>::LazyBST() {
+    rebalancing = false;
     root = NULL;
 }
 
@@ -122,7 +115,12 @@ LazyBST<T>::~LazyBST() {
         recDelete();
         root = NULL;
     }
-    size = 0;
+}
+
+template <typename T>
+void LazyBST<T>::recDelete(){
+    recDeleteHelper(root);
+    root = NULL;
 }
 
 template <typename T>
@@ -136,28 +134,6 @@ void LazyBST<T>::recDeleteHelper(TreeNode<T> *node) {
     }
     return;
 }
-
-// template <typename T>
-// bool LazyBST<T>::contains(T value) {
-
-//     if (isEmpty()) return false;
-
-//     TreeNode<T> *current = root;
-
-//     while(current->key != value) {
-//         if (value < current->key) {
-//             current = current->left;
-//         }
-//         else {
-//             current = current->right;
-//         }
-
-//         if (current == NULL) return false;
-//     }
-//     return true;
-
-// }
-
 
 template <typename T>
 void LazyBST<T>::recPrint(TreeNode<T> *node){
@@ -198,33 +174,6 @@ T* LazyBST<T>::getMax(){
     if(isEmpty()){
         return NULL;
     }
-    // public:
-    //     LazyBST(); // empty tree
-    //     virtual ~LazyBST();
-    //     void insert(T value);
-    //     bool contains(T value);
-    //     bool deleteNode(T k);
-    //     TreeNode<T>* getSuccessor(TreeNode<T> *d); // this method for finding the successor of the node about to be deleted
-    //     void tryRebuild();
-
-    //     bool isEmpty();
-    //     T* getMin();
-    //     T* getMax();
-
-    //     void printTree();
-    //     void recPrint(TreeNode<T> *node);
-    //     void recDelete(TreeNode<T> *node); // used for deleting the entire tree
-
-    //     TreeNode<T>* getRoot();
-
-    // private:
-    //     int size;
-    //     TreeNode<T> *root;
-    //     int counterDone; // used to determine whether the array being built is done 
-
-    //     void arrayBuilder(T* buildArray);
-    //     int buildHelper(TreeNode<T>* node, T* buildArray, int index);
-    //     void recRebuildInsert(T* buildArray, int lowerBound, int upperBound);
     TreeNode<T> *current = root;
     while(current->right != NULL){
         current = current->right;
@@ -267,7 +216,9 @@ void LazyBST<T>::insert(T value){
     }
     root->updateDepths(); // update depths of tree
     ++size;
-    tryRebuild();
+    if(rebalancing){
+        tryRebuild();
+    }
 }
 
 template <typename T>
@@ -379,7 +330,9 @@ bool LazyBST<T>::deleteNode(T k){
     delete current;
     root->updateDepths(); // update depths of tree
     --size;
+    rebalancing = true;
     tryRebuild();
+    rebalancing = false;
     return true;
 }
 
@@ -423,19 +376,22 @@ void LazyBST<T>::tryRebuild() {
         size = 0;
 
         // insert median
-        rebuildArray[0]->print();
-        rebuildArray[median]->print();
+        //rebuildArray[0]->print();
+        //rebuildArray[median]->print();
+        rebalancing = true;
         insert(rebuildArray[median]);
         
         // new median (median/2)
         recRebuildInsert(rebuildArray, median+1, size);
         recRebuildInsert(rebuildArray, 0, median-1);
+        rebalancing = false;
 
         // new median (original median + origmedian/2)
 
         // repeat previous 2 steps
         
         // iterate through array to 
+        delete[] rebuildArray;
     }
 }
 
@@ -456,9 +412,9 @@ void LazyBST<T>::recRebuildInsert(T* rebuildArray, int lowerBound, int upperBoun
     int median = lowerBound + ((upperBound - lowerBound)/2);
     insert(rebuildArray[median]);
     // create new upper bound for the lower half (the one below this median)
-    recRebuildInsert(rebuildArray, lowerBound, (lowerBound + ((upperBound - lowerBound)/2) - 1));
+    recRebuildInsert(rebuildArray, lowerBound, median - 1);
     // create nwe lower bound for the upper half (the one above this median)
-    recRebuildInsert(rebuildArray, (lowerBound + ((upperBound - lowerBound)/2) + 1), upperBound);
+    recRebuildInsert(rebuildArray, median + 1, upperBound);
 }
 
 template <typename T>

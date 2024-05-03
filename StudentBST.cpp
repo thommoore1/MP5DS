@@ -10,8 +10,8 @@ void StudentBST::printHelper(TreeNode<Student*>* node){
 
     printHelper(node->left);
     node->key->print();
-    cout << "RD: " << node->rightDepth << endl;
-    cout << "LD: " << node->leftDepth << endl;
+    //cout << "RD: " << node->rightDepth << endl;
+    //cout << "LD: " << node->leftDepth << endl;
     printHelper(node->right);
 }
 
